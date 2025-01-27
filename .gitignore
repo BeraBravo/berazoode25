@@ -1,2 +1,7 @@
 learning/  
 ny_taxi_postgres_data/
+.aider*
+*.csv 
+*.gz 
+*.ipynb
+.terraform/
