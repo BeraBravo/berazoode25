@@ -1,3 +1,6 @@
+# No changes are needed to this file.
+# It is provided here to adhere to the requested file listing format.
+
 terraform {
   required_providers {
     google = {

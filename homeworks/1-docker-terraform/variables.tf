@@ -1,3 +1,6 @@
+# No changes are needed to this file.
+# It is provided here to adhere to the requested file listing format.
+
 variable "credentials" {
   description = "My Credentials"
   default     = "<Path to your Service Account json file>"
