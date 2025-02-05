@@ -195,6 +195,40 @@ green_tripdata_2020-04.csv
 ![Evidence2a](images/question2-a.png)
 ![Evidence2b](images/question2-b.png)
 
+### Question 3. Number of rows (yellow, 2020)
+
+> anwser: 
+24,648,499
+
+![Evidence3](images/question3.png)
+
+### Question 4. Number of rows (green, 2020)
+
+> anwser: 
+1734051
+
+![Evidence4](images/question4.png)
+
+
+### Question 5. Number of rows (yellow, March 2021) (1 point)
+
+> anwser: 
+1,925,152
+
+![Evidence5](images/question5.png)
+
+### Question 6. Timezone for trigger 
+
+> anwser: 
+Add a timezone property set to America/New_York in the Schedule trigger configuration
+
+![Evidence6](images/question6.png)
+
+
+
+
+
+
 
 
 
