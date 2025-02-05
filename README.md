@@ -185,29 +185,29 @@ _This README was generated with ❤️ by [readme-md-generator](https://github.c
 > anwser: 
 128.3 MB
 
-![Evidence1](question1.png)
+![Evidence1](images/question1.png)
 
 ### Question 2. Rendered value (1 point)
 
 > anwser: 
 green_tripdata_2020-04.csv
 
-![Evidence2a](question2-a.png)
-![Evidence2b](question2-b.png)
+![Evidence2a](images/question2-a.png)
+![Evidence2b](images/question2-b.png)
 
 ### Question 3. Number of rows (yellow, 2020)
 
 > anwser: 
 24,648,499
 
-![Evidence3](question3.png)
+![Evidence3](images/question3.png)
 
 ### Question 4. Number of rows (green, 2020)
 
 > anwser: 
 1734051
 
-![Evidence4](question4.png)
+![Evidence4](images/question4.png)
 
 
 ### Question 5. Number of rows (yellow, March 2021) (1 point)
@@ -215,15 +215,14 @@ green_tripdata_2020-04.csv
 > anwser: 
 1,925,152
 
-![Evidence5](question5.png)
+![Evidence5](images/question5.png)
 
 ### Question 6. Timezone for trigger 
 
 > anwser: 
 Add a timezone property set to America/New_York in the Schedule trigger configuration
 
-![Evidence6](question6.png)
-
+![Evidence6](images/question6.png)
 
 
 
