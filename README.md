@@ -176,3 +176,28 @@ Give a ⭐️ if this project helped you!
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+
+
+##  Docker and terraform 
+
+### Question 1. File size (1 point)
+
+> anwser: 
+128.3 MB
+
+![Evidence1](images/question1.png)
+
+### Question 2. Rendered value (1 point)
+
+> anwser: 
+green_tripdata_2020-04.csv
+
+![Evidence2a](images/question2-a.png)
+![Evidence2b](images/question2-b.png)
+
+
+
+
+
+
+
