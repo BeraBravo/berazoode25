@@ -171,13 +171,6 @@ terraform apply -auto-approve
 terraform init, terraform apply -auto-approve, terraform destroy
 
 
-
-Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
-
-
 ##  Docker and terraform 
 
 ### Question 1. File size (1 point)
@@ -223,6 +216,128 @@ green_tripdata_2020-04.csv
 Add a timezone property set to America/New_York in the Schedule trigger configuration
 
 ![Evidence6](images/question6.png)
+
+
+
+##  Homework 3: Data Warehousing
+
+### Question 1: What is count of records for the 2024 Yellow Taxi Data?
+
+> anwser: 
+20,332,093
+
+> commands:
+
+```sql
+SELECT count(*) FROM `inova-hub.zoocamp_berabravo.yellow_taxi_external`;
+```
+
+### Question 2.
+
+> anwser: 
+0 MB for the External Table and 155.12 MB for the Materialized Table
+
+> commands:
+
+```sql
+SELECT
+    count(DISTINCT PULocationID)
+  FROM
+    `inova-hub.zoocamp_berabravo.yellow_taxi_material`;
+
+SELECT
+    count(DISTINCT PULocationID)
+  FROM
+    `inova-hub.zoocamp_berabravo.yellow_taxi_external`;    
+```
+
+### Question 3.
+
+> anwser: 
+BigQuery is a columnar database, and it only scans the specific columns requested in the query. Querying two columns (PULocationID, DOLocationID) requires reading more data than querying one column (PULocationID), leading to a higher estimated number of bytes processed.
+
+### Question 4. How many records have a fare_amount of 0?
+
+> anwser: 
+8333
+
+```sql
+SELECT
+    COUNT(*) AS zero_fare_count
+  FROM
+    `inova-hub.zoocamp_berabravo.yellow_taxi_material`
+  WHERE
+    fare_amount = 0;
+```
+
+
+
+### Question 5. The best strategy to make an optimized table in Big Query
+
+> anwser: 
+Partition by tpep_dropoff_datetime and Partition by VendorID
+
+
+```sql
+CREATE OR REPLACE TABLE
+  `inova-hub.zoocamp_berabravo.yellow_taxi_partitione`
+PARTITION BY
+  DATE(tpep_dropoff_datetime)
+AS
+SELECT
+  *
+FROM
+  `inova-hub.zoocamp_berabravo.yellow_taxi_material`;
+
+CREATE OR REPLACE TABLE
+  `inova-hub.zoocamp_berabravo.yellow_taxi_partitione_cluster`
+PARTITION BY
+  DATE(tpep_dropoff_datetime)
+CLUSTER BY VendorID AS
+SELECT * FROM `inova-hub.zoocamp_berabravo.yellow_taxi_partitione`;
+```
+
+### Question 6. Estimated processed bytes (1 point)
+
+> anwser: 
+310.24 MB for non-partitioned table and 26.84 MB for the partitioned table
+
+
+```sql
+SELECT DISTINCT
+    VendorID
+  FROM
+    `inova-hub.zoocamp_berabravo.yellow_taxi_material`
+  WHERE
+    tpep_dropoff_datetime BETWEEN '2024-03-01' AND '2024-03-15 23:59:59';   
+
+
+  SELECT DISTINCT
+    VendorID
+  FROM
+    `inova-hub.zoocamp_berabravo.yellow_taxi_partitione`
+  WHERE
+    tpep_dropoff_datetime BETWEEN '2024-03-01' AND '2024-03-15 23:59:59';
+```
+
+### Question 7. Where is the data for external tables stored?
+
+> anwser: 
+GCP Bucket
+
+### Question 8. Always clustering (1 point)
+
+> anwser: 
+False
+
+
+Give a ⭐️ if this project helped you!
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+
+
+
 
 
 
