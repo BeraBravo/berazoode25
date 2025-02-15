@@ -331,6 +331,41 @@ GCP Bucket
 False
 
 
+##  Workshop "Data Ingestion with dlt"
+
+### Question 1: dlt Version
+
+> anwser: 
+dlt 1.6.1
+
+> commands:
+ dlt --version
+
+Question 2. How many tables were created? (1 point)
+
+> anwser: 
+
+4
+
+
+
+### Question 3. The total number of records extracted?
+
+> anwser: 
+
+10000
+
+
+
+### Average trip duration (1 point)
+
+> anwser: 
+
+32.3049
+
+
+
+
 Give a ⭐️ if this project helped you!
 
 ***
