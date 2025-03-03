@@ -365,8 +365,83 @@ Question 2. How many tables were created? (1 point)
 
 
 
+##  Homework 5: Batch and Spark
 
-Give a ⭐️ if this project helped you!
+### Question 1: Install Spark and PySpark
+
+> anwser: 
+Spark version: 3.3.2
+
+> commands:
+```python
+from pyspark.sql import SparkSession
+
+# Create a local spark session
+spark = SparkSession.builder \
+    .master("local") \
+    .appName("MySparkApp") \
+    .getOrCreate()
+
+# Execute spark.version
+spark_version = spark.version
+print(f"Spark version: {spark_version}")
+
+# Stop the SparkSession
+spark.stop()
+
+# python  py-spark-init.py
+
+```
+
+### Question 2: FHV October 2019
+
+> anwser: 
+6MB
+
+```bash
+ls -lrth 
+total 37M
+-rw-r--r-- 1 codespace codespace 6.1M Mar  3 11:40 part-00001-8f7c4600-1261-4297-b0d0-ed0805f56456-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.2M Mar  3 11:40 part-00000-8f7c4600-1261-4297-b0d0-ed0805f56456-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.2M Mar  3 11:40 part-00002-8f7c4600-1261-4297-b0d0-ed0805f56456-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.1M Mar  3 11:40 part-00003-8f7c4600-1261-4297-b0d0-ed0805f56456-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.1M Mar  3 11:40 part-00004-8f7c4600-1261-4297-b0d0-ed0805f56456-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.1M Mar  3 11:40 part-00005-8f7c4600-1261-4297-b0d0-ed0805f56456-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace    0 Mar  3 11:40 _SUCCESS
+```
+
+> commands:
+```python
+from pyspark.sql import types
+
+# Create a schema
+schema = types.StructType([
+    types.StructField('hvfhs_license_num', types.StringType(), True),
+    types.StructField('dispatching_base_num', types.StringType(), True),
+    types.StructField('pickup_datetime', types.TimestampType(), True),
+    types.StructField('dropoff_datetime', types.TimestampType(), True),
+    types.StructField('PULocationID', types.IntegerType(), True),
+    types.StructField('DOLocationID', types.IntegerType(), True),
+    types.StructField('SR_Flag', types.StringType(), True)
+])
+
+# Read the cvs in a dataframe
+df = spark.read \
+                 .option("header", "true") \
+                 .schema(schema) \
+                 .csv('fhv_tripdata_2019-10.csv')
+
+# Repartition for 6 partitions
+df = df.repartition(6)
+
+# write to parquets
+df.write.parquet('fhv/2019/01/')
+
+# all code above are executed in the jupyter lab
+
+```
+
+
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
