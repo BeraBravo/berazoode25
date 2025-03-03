@@ -410,11 +410,17 @@ total 37M
 -rw-r--r-- 1 codespace codespace    0 Mar  3 11:40 _SUCCESS
 ```
 
+
+### Question 3: How many taxi trips were there on the 15th of October?
+
+> anwser: 
+62,610
+
 > commands:
 ```python
+
 from pyspark.sql import types
 
-# Create a schema
 schema = types.StructType([
     types.StructField('hvfhs_license_num', types.StringType(), True),
     types.StructField('dispatching_base_num', types.StringType(), True),
@@ -425,25 +431,133 @@ schema = types.StructType([
     types.StructField('SR_Flag', types.StringType(), True)
 ])
 
-# Read the cvs in a dataframe
 df = spark.read \
                  .option("header", "true") \
                  .schema(schema) \
                  .csv('fhv_tripdata_2019-10.csv')
 
-# Repartition for 6 partitions
 df = df.repartition(6)
 
-# write to parquets
 df.write.parquet('fhv/2019/01/')
 
-# all code above are executed in the jupyter lab
+df_fhv = spark.read.parquet('fhv/2019/01/*')
+
+df_fhv.registerTempTable('fhv')
+
+spark.sql("""
+SELECT count(*)
+FROM fhv
+WHERE pickup_datetime >= '2019-10-15'
+and pickup_datetime < '2019-10-16'
+""").show()
 
 ```
 
 
+### Question 4: Longest trip for each day What is the length of the longest trip in the dataset in hours?
 
-***
+> anwser: 
+631,152.50 Hours
+
+
+> commands:
+```python
+spark.sql("""
+SELECT pickup_datetime
+, dropoff_datetime
+, (unix_timestamp(dropoff_datetime) - unix_timestamp(pickup_datetime)) / 3600 as hours
+FROM fhv
+ORDER BY hours desc
+""").show()
+
+```
+
+### Question 5: User Interface Spark’s User Interface which shows the application's dashboard runs on which local port?
+
+> anwser: 
+4040
+
+http://127.0.0.1:4040/
+
+
+### Question 6: Least frequent pickup location zone Using the zone lookup data and the FHV October 2019 data, what is the name of the LEAST frequent pickup location Zone?
+> anwser: 
+
+Jamaica Bay
+
+> commands:
+```python
+
+look_spark_df = spark.read\
+    .option('header', True)\
+    .csv('taxi_zone_lookup.csv')
+
+look_spark_df.createOrReplaceTempView('lookup')
+
+spark.sql("""
+SELECT count(*) as cnt
+,PULocationID
+,Borough
+,zone
+FROM fhv inner join lookup
+on PULocationID = LocationID
+GROUP BY PULocationID, Borough, zone
+ORDER BY cnt asc
+""").show()
+```
+
+```bash
++---+------------+-------------+--------------------+
+|cnt|PULocationID|      Borough|                zone|
++---+------------+-------------+--------------------+
+|  1|         103|    Manhattan|Governor's Island...|
+|  3|         105|    Manhattan|Governor's Island...|
+|  4|         199|        Bronx|       Rikers Island|
+| 14|           2|       Queens|         Jamaica Bay|
+| 35|          12|    Manhattan|        Battery Park|
+| 36|          30|       Queens|       Broad Channel|
+| 54|          27|       Queens|Breezy Point/Fort...|
+| 73|           8|       Queens|        Astoria Park|
+|132|          99|Staten Island|     Freshkills Park|
+|162|         207|       Queens|Saint Michaels Ce...|
+|261|         111|     Brooklyn| Green-Wood Cemetery|
+|301|         253|       Queens|       Willets Point|
+|321|          54|     Brooklyn|     Columbia Street|
+|339|         154|     Brooklyn|Marine Park/Floyd...|
+|348|         202|    Manhattan|    Roosevelt Island|
+|389|          46|        Bronx|         City Island|
+|404|         194|    Manhattan|     Randalls Island|
+|404|          38|       Queens|     Cambria Heights|
+|412|         201|       Queens|       Rockaway Park|
+|455|          34|     Brooklyn|  Brooklyn Navy Yard|
++---+------------+-------------+--------------------+
+
+```
+
+```python
+spark.sql("""
+SELECT count(*) as cnt
+,PULocationID
+FROM fhv
+GROUP BY PULocationID
+ORDER BY cnt asc
+LIMIT 5
+""").show()
+```
+
+```bash
++---+------------+
+|cnt|PULocationID|
++---+------------+
+|  1|         103|
+|  3|         105|
+|  4|         199|
+| 14|           2|
+| 35|          12|
++---+------------+
+```
+
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
 
 
