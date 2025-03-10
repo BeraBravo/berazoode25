@@ -290,7 +290,7 @@ FROM
   `inova-hub.zoocamp_berabravo.yellow_taxi_material`;
 
 CREATE OR REPLACE TABLE
-  `inova-hub.zoocamp_berabravo.yellow_taxi_partitione_cluster`
+  `inova-hub.zoocamp_berabravo.yellow_taxi_partitione_cluster` 
 PARTITION BY
   DATE(tpep_dropoff_datetime)
 CLUSTER BY VendorID AS
@@ -559,6 +559,34 @@ LIMIT 5
 
 
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+
+##  Homework 6: Streaming 
+
+
+### Question 1. Version of Red Panda
+
+> anwser: 
+
+node-1  v24.2.18 - f9a22d443087b824803638623d6b7492ec8221f9
+
+> commands:
+```bash
+docker exec -it redpanda-1 bash
+rpk version
+```
+
+### Question 2. Creating a topic
+
+> anwser: 
+
+TOPIC        STATUS
+green-trips  OK
+
+> commands:
+```bash
+docker exec redpanda-1 rpk topic create green-trips --partitions 1 --replicas 1
+```
+
 
 
 
